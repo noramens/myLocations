@@ -11,6 +11,9 @@ export const NavTitle = styled.h1`
   color: #f2cc8f;
   font-weight: 600;
   font-size: 2.4rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NavAction = styled.button`

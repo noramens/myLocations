@@ -13,6 +13,7 @@ export default function Footer() {
   function navigateToLocations() {
     navigate('locations');
   }
+
   return (
     <FooterBar>
       <NavAction onClick={navigateToCategories}>Categories</NavAction>

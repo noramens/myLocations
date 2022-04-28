@@ -2,7 +2,14 @@ import React from 'react';
 
 import useForm from '../hooks/useForm';
 import validate from '../helpers/validate';
-import { Main, FormWrapper, Input, ErrorMessage, FormAction } from './Styles';
+import {
+  Main,
+  FormWrapper,
+  Input,
+  ErrorMessage,
+  FormAction,
+  Label
+} from './Styles';
 
 export default function AddCategory() {
   const { values, errors, handleChange } = useForm(validate);
@@ -18,7 +25,7 @@ export default function AddCategory() {
     <Main>
       <h1>Add category</h1>
       <FormWrapper>
-        <label htmlFor="category">Category Name</label>
+        <Label htmlFor="category">Category Name</Label>
         <Input
           id="category"
           type="text"

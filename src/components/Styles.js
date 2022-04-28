@@ -53,6 +53,7 @@ export const Input = styled.input`
   border: 1px solid #787a91;
   outline: #787a91;
   font-size: 1.1rem;
+  font-weight: 400;
   color: #000;
   padding: 0.5rem;
   border-radius: 3px;
@@ -120,6 +121,11 @@ export const selectStyle = {
   control: (base, state) => ({
     ...base,
     border: '1px solid #787a91',
-    fontSize: '1.1rem'
+    fontSize: '1.1rem',
+    fontWeight: '400'
   })
 };
+
+export const Label = styled.label`
+  font-weight: 300;
+`;

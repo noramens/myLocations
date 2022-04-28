@@ -13,7 +13,8 @@ import {
   Input,
   Main,
   selectStyle,
-  themeStyles
+  themeStyles,
+  Label
 } from './Styles';
 
 const options = [
@@ -49,7 +50,7 @@ export default function AddLocation() {
       <h1>Add location</h1>
       <FormWrapper>
         <FieldWrapper>
-          <label htmlFor="location">Location Name*</label>
+          <Label htmlFor="location">Location Name*</Label>
           <Input
             id="location"
             name="locationName"
@@ -63,7 +64,7 @@ export default function AddLocation() {
         </FieldWrapper>
 
         <FieldWrapper>
-          <label htmlFor="address">Address*</label>
+          <Label htmlFor="address">Address*</Label>
           <Input
             id="address"
             name="address"
@@ -77,7 +78,7 @@ export default function AddLocation() {
         </FieldWrapper>
 
         <FieldWrapper>
-          <label htmlFor="coordinates">Coordinates*</label>
+          <Label htmlFor="coordinates">Coordinates*</Label>
 
           <CoordinatesWrapper>
             <CoordinateInput
@@ -85,7 +86,7 @@ export default function AddLocation() {
                 marginRight: '1rem'
               }}
             >
-              <label>Latitude</label>
+              <Label>Latitude</Label>
               <Input
                 coord
                 id="coordinates"
@@ -100,7 +101,7 @@ export default function AddLocation() {
             </CoordinateInput>
 
             <CoordinateInput>
-              <label>Longitude</label>
+              <Label>Longitude</Label>
               <Input
                 coord
                 id="coordinates"
@@ -116,7 +117,7 @@ export default function AddLocation() {
           </CoordinatesWrapper>
 
           <FieldWrapper style={{ background: '#fff' }}>
-            <label htmlFor="category">Category</label>
+            <Label htmlFor="category">Category</Label>
 
             <Select
               id="category"

@@ -1,5 +1,12 @@
 import React from 'react';
 
+import Table from './common/Table';
+import { Main } from './Styles';
+
 export default function Locations() {
-  return <h2>Locations component</h2>;
+  return (
+    <Main style={{ width: '70vw' }}>
+      <Table />
+    </Main>
+  );
 }

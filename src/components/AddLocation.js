@@ -58,7 +58,7 @@ export default function AddLocation() {
             onChange={handleChange}
           />
           {errors.locationName && (
-            <ErrorMessage>{errors.errorMessage}</ErrorMessage>
+            <ErrorMessage>{errors.locationNameErrorMessage}</ErrorMessage>
           )}
         </FieldWrapper>
 
@@ -71,7 +71,9 @@ export default function AddLocation() {
             placeholder="eg: 2157 Henderson Highway"
             onChange={handleChange}
           />
-          {errors.address && <ErrorMessage>{errors.errorMessage}</ErrorMessage>}
+          {errors.address && (
+            <ErrorMessage>{errors.addressErrorMessage}</ErrorMessage>
+          )}
         </FieldWrapper>
 
         <FieldWrapper>
@@ -93,7 +95,7 @@ export default function AddLocation() {
                 onChange={handleChange}
               />
               {errors.latitude && (
-                <ErrorMessage>{errors.errorMessage}</ErrorMessage>
+                <ErrorMessage>{errors.latitudeErrorMessage}</ErrorMessage>
               )}
             </CoordinateInput>
 
@@ -108,7 +110,7 @@ export default function AddLocation() {
                 onChange={handleChange}
               />
               {errors.longitude && (
-                <ErrorMessage>{errors.errorMessage}</ErrorMessage>
+                <ErrorMessage>{errors.longitudeErrorMessage}</ErrorMessage>
               )}
             </CoordinateInput>
           </CoordinatesWrapper>

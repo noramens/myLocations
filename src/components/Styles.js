@@ -58,6 +58,9 @@ export const Input = styled.input`
   padding: 0.5rem;
   border-radius: 3px;
   width: ${props => (props.coord ? '13.38vw' : 'auto')};
+  &:focus {
+    outline: 1.2px solid #712b75;
+  }
 `;
 
 export const ErrorMessage = styled.span`

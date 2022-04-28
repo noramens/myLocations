@@ -9,10 +9,7 @@ const useForm = validate => {
     setErrors(validate(values));
   }, [values, validate]);
 
-  const reset = () => {
-    setValues({});
-  };
-
+  const reset = () => setValues({});
   const handleChange = event => {
     event.persist();
     setValues({

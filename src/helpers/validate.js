@@ -25,27 +25,27 @@ export default function validate(values) {
 
   if (checkLocationName) {
     errors.locationName = true;
-    errors.errorMessage = checkLocationName;
+    errors.locationNameErrorMessage = checkLocationName;
   }
 
   if (checkCategoryName) {
     errors.categoryName = true;
-    errors.errorMessage = checkCategoryName;
+    errors.categoryNameErrorMessage = checkCategoryName;
   }
 
   if (checkAddress) {
     errors.address = true;
-    errors.errorMessage = checkAddress;
+    errors.addressErrorMessage = checkAddress;
   }
 
   if (checkLatitude) {
     errors.latitude = true;
-    errors.errorMessage = checkLatitude;
+    errors.latitudeErrorMessage = checkLatitude;
   }
 
   if (checkLongitude) {
     errors.longitude = true;
-    errors.errorMessage = checkLongitude;
+    errors.longitudeErrorMessage = checkLongitude;
   }
 
   return errors;

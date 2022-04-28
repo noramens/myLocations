@@ -27,7 +27,7 @@ export default function AddCategory() {
           onChange={handleChange}
         />
         {errors.categoryName && (
-          <ErrorMessage>{errors.errorMessage}</ErrorMessage>
+          <ErrorMessage>{errors.categoryNameErrorMessage}</ErrorMessage>
         )}
 
         <FormAction disabled={disableAddButton} onClick={handleAddCategory}>

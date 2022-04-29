@@ -82,3 +82,9 @@ export const rows = [
   createData('Nougat', 360, 19.0, 9, 37.0),
   createData('Oreo', 437, 18.0, 63, 4.0)
 ];
+
+export const options = [
+  { id: 1, label: 'School', value: 'school' },
+  { id: 2, label: 'Restuarant', value: 'restuarant' },
+  { id: 3, label: 'Church', value: 'church' }
+];

@@ -17,8 +17,8 @@ export default function validate(values) {
   const { locationName, categoryName, address, latitude, longitude } = values;
   let errors = {};
 
-  const checkLocationName = validateName(locationName, 'Location Name');
-  const checkCategoryName = validateName(categoryName, 'Category Name');
+  const checkLocationName = validateName(locationName, 'Location name');
+  const checkCategoryName = validateName(categoryName, 'Category name');
   const checkAddress = validateAddress(address, 'Address');
   const checkLatitude = validateLatitude(latitude);
   const checkLongitude = validateLongitude(longitude);

@@ -1,8 +1,11 @@
 import React from 'react';
 import Select from 'react-select';
+import { useDispatch } from 'react-redux';
 
+import { addLocation } from '../store/locations';
 import useForm from '../hooks/useForm';
 import validate from '../helpers/validate';
+import { options } from '../helpers/constants';
 import {
   CoordinatesWrapper,
   CoordinateInput,
@@ -17,31 +20,29 @@ import {
   Label
 } from './Styles';
 
-const options = [
-  { id: 1, label: 'School', value: 'school' },
-  { id: 2, label: 'Restuarant', value: 'restuarant' },
-  { id: 3, label: 'Church', value: 'church' }
-];
-
 export default function AddLocation() {
-  const { values, setValues, errors, handleChange } = useForm(validate);
+  const dispatch = useDispatch();
+
+  const { values, reset, setValues, errors, handleChange } = useForm(validate);
 
   const disableAddButton =
     !values.locationName ||
     !values.address ||
     !values.latitude ||
     !values.longitude ||
-    !values.category ||
+    !values.categoryName ||
     Object.keys(errors)?.length !== 0;
 
   function handleAddCategory(e) {
     e.preventDefault();
+    dispatch(addLocation(values));
+    reset();
   }
 
   function handleSelectChange(event) {
     setValues(prevValues => ({
       ...prevValues,
-      category: event?.value
+      categoryName: event?.value
     }));
   }
 
@@ -56,6 +57,7 @@ export default function AddLocation() {
             name="locationName"
             type="text"
             placeholder="eg: Harvard"
+            value={values.locationName || ''}
             onChange={handleChange}
           />
           {errors.locationName && (
@@ -70,6 +72,7 @@ export default function AddLocation() {
             name="address"
             type="text"
             placeholder="eg: 2157 Henderson Highway"
+            value={values.address || ''}
             onChange={handleChange}
           />
           {errors.address && (
@@ -93,6 +96,7 @@ export default function AddLocation() {
                 name="latitude"
                 type="number"
                 placeholder="eg: 38.8951"
+                value={values.latitude || ''}
                 onChange={handleChange}
               />
               {errors.latitude && (
@@ -108,6 +112,7 @@ export default function AddLocation() {
                 name="longitude"
                 type="number"
                 placeholder="eg: -77.0364"
+                value={values.longitude || ''}
                 onChange={handleChange}
               />
               {errors.longitude && (
@@ -123,7 +128,10 @@ export default function AddLocation() {
               id="category"
               placeholder="select a category"
               options={options}
-              value={options.find(option => option.value === values.category)}
+              value={
+                options.find(option => option.value === values.categoryName) ||
+                ''
+              }
               onChange={handleSelectChange}
               theme={themeStyles}
               styles={selectStyle}

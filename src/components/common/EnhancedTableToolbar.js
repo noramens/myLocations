@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { Toolbar, Typography, Tooltip, IconButton, alpha } from '@mui/material';
 
@@ -28,6 +29,14 @@ export default function EnhancedTableToolbar({ numSelected, onDeleteClick }) {
         >
           {numSelected} selected
         </Typography>
+      )}
+
+      {numSelected === 1 && (
+        <Tooltip title="Edit">
+          <IconButton>
+            <EditIcon onClick={onDeleteClick} />
+          </IconButton>
+        </Tooltip>
       )}
 
       {numSelected > 0 ? (

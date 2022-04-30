@@ -25,6 +25,11 @@ export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const isSelected = name => selected.indexOf(name) !== -1;
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -73,12 +78,6 @@ export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
     setDense(event.target.checked);
   };
 
-  const isSelected = name => selected.indexOf(name) !== -1;
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -106,18 +105,18 @@ export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                .map(row => {
+                  const isItemSelected = isSelected(row.locationName);
+                  const labelId = `enhanced-table-checkbox-${row.id}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
+                      onClick={event => handleClick(event, row.locationName)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -135,12 +134,12 @@ export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.locationName}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.address}</TableCell>
+                      <TableCell align="right">{row.latitude}</TableCell>
+                      <TableCell align="right">{row.longitude}</TableCell>
+                      <TableCell align="right">{row.categoryName}</TableCell>
                     </TableRow>
                   );
                 })}

@@ -1,21 +1,33 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Table from './common/EnhancedTable';
-import { headCells, rows } from '../helpers/constants';
+import EmptyState from './common/EmptyState';
+import { selectLocations } from '../store/locations';
+import { locationHeader } from '../helpers/constants';
 import { Main } from './Styles';
 
 export default function Locations() {
+  const locations = useSelector(selectLocations);
+
   function handleRowDelete() {
     return;
   }
+
+  console.log('locations: ', locations);
   return (
     <Main style={{ width: '70vw' }}>
       <h2>Locations Management</h2>
-      <Table
-        headCells={headCells}
-        rows={rows}
-        onDeleteClick={handleRowDelete}
-      />
+
+      {locations.length > 0 ? (
+        <Table
+          headCells={locationHeader}
+          rows={locations}
+          onDeleteClick={handleRowDelete}
+        />
+      ) : (
+        <EmptyState name="location" />
+      )}
     </Main>
   );
 }

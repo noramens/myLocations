@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import categoriesSlice from './category';
+import categoriesSlice from './categories';
 import locationsSlice from './locations';
 
 const reducer = combineReducers({

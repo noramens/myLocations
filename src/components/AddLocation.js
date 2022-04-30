@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { addLocation } from '../store/locations';
 import useForm from '../hooks/useForm';
 import validate from '../helpers/validate';
-import { options } from '../helpers/constants';
+import { prepareCategorySelectOptions } from '../helpers/utils';
+import { selectCategories } from '../store/categories';
 import {
   CoordinatesWrapper,
   CoordinateInput,
@@ -23,7 +24,11 @@ import {
 export default function AddLocation() {
   const dispatch = useDispatch();
 
+  const categories = useSelector(selectCategories);
+
   const { values, reset, setValues, errors, handleChange } = useForm(validate);
+
+  const [categoryOptions, setCategoryOptions] = useState([]);
 
   const disableAddButton =
     !values.locationName ||
@@ -33,18 +38,28 @@ export default function AddLocation() {
     !values.categoryName ||
     Object.keys(errors)?.length !== 0;
 
+  useEffect(() => {
+    setCategoryOptions(prepareCategorySelectOptions(categories));
+  }, [categories]);
+
   function handleAddCategory(e) {
+    const payload = {
+      id: new Date().getTime(),
+      ...values
+    };
     e.preventDefault();
-    dispatch(addLocation(values));
+    dispatch(addLocation(payload));
     reset();
   }
 
   function handleSelectChange(event) {
     setValues(prevValues => ({
       ...prevValues,
-      categoryName: event?.value
+      categoryName: event?.label
     }));
   }
+
+  console.log('values: ', values);
 
   return (
     <Main>
@@ -127,10 +142,11 @@ export default function AddLocation() {
             <Select
               id="category"
               placeholder="select a category"
-              options={options}
+              options={categoryOptions}
               value={
-                options.find(option => option.value === values.categoryName) ||
-                ''
+                categoryOptions.find(
+                  option => option.label === values.categoryName
+                ) || ''
               }
               onChange={handleSelectChange}
               theme={themeStyles}

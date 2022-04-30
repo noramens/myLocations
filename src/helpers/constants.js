@@ -34,6 +34,50 @@ function createData(name, calories, fat, carbs, protein) {
   };
 }
 
+export const categoryHeader = [
+  {
+    id: 'categoryName',
+    numeric: false,
+    disablePadding: true,
+    label: 'Category name'
+  }
+];
+
+export const locationHeader = [
+  {
+    id: 'locationName',
+    numeric: false,
+    disablePadding: true,
+    label: 'Location name'
+  },
+
+  {
+    id: 'address',
+    numeric: true,
+    disablePadding: true,
+    label: 'Address'
+  },
+  {
+    id: 'latitude',
+    numeric: true,
+    disablePadding: true,
+    label: 'Latitude'
+  },
+
+  {
+    id: 'longitude',
+    numeric: true,
+    disablePadding: true,
+    label: 'Longitude'
+  },
+  {
+    id: 'categoryName',
+    numeric: true,
+    disablePadding: true,
+    label: 'Category name'
+  }
+];
+
 export const headCells = [
   {
     id: 'name',

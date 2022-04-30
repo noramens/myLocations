@@ -27,3 +27,12 @@ export function stableSort(array, comparator) {
   });
   return stabilizedThis.map(el => el[0]);
 }
+
+export const prepareCategorySelectOptions = (categories = []) => {
+  return categories.map(category => {
+    return {
+      label: category.name,
+      value: category.id
+    };
+  });
+};

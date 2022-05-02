@@ -59,8 +59,6 @@ export default function AddLocation() {
     }));
   }
 
-  console.log('values: ', values);
-
   return (
     <Main>
       <h1>Add location</h1>

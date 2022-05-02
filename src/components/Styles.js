@@ -71,8 +71,8 @@ export const ErrorMessage = styled.span`
 
 export const FormAction = styled.button`
   align-self: flex-end;
-  background-color: #712b75;
-  color: #fff;
+  background-color: ${props => (props.secondary ? '#fff' : '#712b75')};
+  color: ${props => (props.secondary ? '#712b75' : '#fff')};
   outline: #712b75;
   border: 1px solid #712b75;
   padding: 10px 20px;

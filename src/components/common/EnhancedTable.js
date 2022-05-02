@@ -17,7 +17,7 @@ import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { getComparator, stableSort } from '../../helpers/utils';
 
-export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
+export default function EnhancedTable({ headCells, rows }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -83,7 +83,8 @@ export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          onDeleteClick={onDeleteClick}
+          selectedRow={selected}
+          setSelectedRow={setSelected}
         />
         <TableContainer>
           <Table
@@ -106,13 +107,13 @@ export default function EnhancedTable({ headCells, rows, onDeleteClick }) {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
-                  const isItemSelected = isSelected(row.locationName);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${row.id}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.locationName)}
+                      onClick={event => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

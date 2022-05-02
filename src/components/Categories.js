@@ -10,8 +10,6 @@ import CollapsibleTable from './common/CollapsibleTable';
 export default function Categories() {
   const categories = useSelector(selectCategories);
 
-  console.log('bool: ', Boolean(categories), 'categories: ', categories);
-
   return (
     <Main style={{ width: '70vw' }}>
       <h2> Categories Management</h2>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import useForm from '../hooks/useForm';
 import validate from '../helpers/validate';
-import { addCategories, selectCategories } from '../store/categories';
+import { addCategories } from '../store/categories';
 import {
   Main,
   FormWrapper,
@@ -15,8 +15,6 @@ import {
 
 export default function AddCategory() {
   const dispatch = useDispatch();
-
-  const categories = useSelector(selectCategories);
 
   const { values, errors, reset, handleChange } = useForm(validate);
 
@@ -32,8 +30,6 @@ export default function AddCategory() {
     dispatch(addCategories(payload));
     reset();
   }
-
-  console.log('add categories: ', categories);
 
   return (
     <Main>

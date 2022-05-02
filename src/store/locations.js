@@ -15,23 +15,53 @@ const locationsSlice = createSlice({
     setAddLocations: (state, action) => {
       return {
         ...state,
-        locations: [...state.locations, action.payload]
+        locations: [action.payload, ...state.locations]
+      };
+    },
+
+    setEditLocation: (state, action) => {
+      const locationsWithoutItem = state.locations.filter(
+        location => location.id !== action.payload.id
+      );
+      return {
+        ...state,
+        locations: [action.payload, ...locationsWithoutItem]
+      };
+    },
+
+    setDeleteLocation: (state, action) => {
+      const filteredLocation = state.locations.filter(
+        location => location?.id !== action.payload
+      );
+
+      return {
+        ...state,
+        locations: [...filteredLocation]
       };
     }
   }
 });
 
 //extract actions from slice
-const { setAddLocations } = locationsSlice.actions;
+const { setAddLocations, setEditLocation, setDeleteLocation } =
+  locationsSlice.actions;
 
 // thunks
 const addLocation = payload => dispatch => {
   dispatch(setAddLocations(payload));
 };
 
+const editLocation = location => dispatch => {
+  dispatch(setEditLocation(location));
+};
+
+const deleteLocation = id => dispatch => {
+  dispatch(setDeleteLocation(id));
+};
+
 //selectors
 const selectLocations = state => state?.locations?.locations;
 
-export { addLocation, selectLocations };
+export { addLocation, selectLocations, editLocation, deleteLocation };
 
 export default locationsSlice.reducer;

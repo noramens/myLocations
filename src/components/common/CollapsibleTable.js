@@ -12,7 +12,7 @@ import { selectLocations } from '../../store/locations';
 import { useSelector } from 'react-redux';
 import CollapsibleTableRow from './CollapsibleTableRow';
 
-export default function CollapsibleTable({ rows, onDeleteClick }) {
+export default function CollapsibleTable({ rows }) {
   const locations = useSelector(selectLocations);
   const [selected, setSelected] = React.useState([]);
 
@@ -52,10 +52,7 @@ export default function CollapsibleTable({ rows, onDeleteClick }) {
 
   return (
     <TableContainer component={Paper}>
-      <EnhancedTableToolbar
-        numSelected={selected.length}
-        onDeleteClick={onDeleteClick}
-      />
+      <EnhancedTableToolbar numSelected={selected.length} />
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

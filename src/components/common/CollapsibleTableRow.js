@@ -64,7 +64,7 @@ export default function CollapsibleTableRow({
           {row?.name}
         </TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow key={row.id * 2}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>

@@ -24,7 +24,7 @@ export default function AddCategory() {
   function handleAddCategory(e) {
     const payload = {
       id: new Date().getTime(),
-      name: values?.categoryName
+      ...values
     };
     e.preventDefault();
     dispatch(addCategories(payload));

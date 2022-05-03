@@ -24,10 +24,10 @@ export default function CollapsibleTableRow({
 }) {
   const [open, setOpen] = React.useState(false);
 
-  const isItemSelected = isSelected(row.name);
-  const labelId = `enhanced-table-checkbox-${row.key}`;
+  const isItemSelected = isSelected(row.id);
+  const labelId = `enhanced-table-checkbox-${row.id}`;
   const tableItems = locations.filter(
-    location => location.categoryName === row.name
+    location => location.categoryName === row.categoryName
   );
 
   return (
@@ -35,7 +35,7 @@ export default function CollapsibleTableRow({
       <TableRow hover key={row.id}>
         <TableCell
           padding="checkbox"
-          onClick={event => handleClick(event, row.name)}
+          onClick={event => handleClick(event, row.id)}
           role="checkbox"
           aria-checked={isItemSelected}
           tabIndex={-1}
@@ -61,7 +61,7 @@ export default function CollapsibleTableRow({
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row?.name}
+          {row?.categoryName}
         </TableCell>
       </TableRow>
       <TableRow key={row.id * 2}>
@@ -120,8 +120,8 @@ export default function CollapsibleTableRow({
 
 CollapsibleTableRow.propTypes = {
   row: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
+    id: PropTypes.number,
+    name: PropTypes.string
   }),
   handleClick: PropTypes.func.isRequired,
   isSelected: PropTypes.func.isRequired,

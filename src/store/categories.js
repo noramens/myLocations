@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { deleteLocation } from './locations';
+
 //initial state
 const initialState = {
   categories: []
@@ -12,26 +14,70 @@ const categoriesSlice = createSlice({
   initialState: initialState,
 
   reducers: {
-    setAddCategories: (state, action) => {
+    setAddCategory: (state, action) => {
       return {
         ...state,
         categories: [...state.categories, action.payload]
+      };
+    },
+    setEditCategory: (state, action) => {
+      const categoriesWithoutItem = state.categories.filter(
+        category => category.id !== action.payload.id
+      );
+      return {
+        ...state,
+        categories: [action.payload, ...categoriesWithoutItem]
+      };
+    },
+    setDeleteCategory: (state, action) => {
+      const categoriesWithoutItem = state.categories.filter(
+        category => category?.id !== action.payload
+      );
+      return {
+        ...state,
+        categories: [...categoriesWithoutItem]
       };
     }
   }
 });
 
 //extract actions from slice
-const { setAddCategories } = categoriesSlice.actions;
+const { setAddCategory, setEditCategory, setDeleteCategory } =
+  categoriesSlice.actions;
 
 // thunks
 const addCategories = payload => dispatch => {
-  dispatch(setAddCategories(payload));
+  dispatch(setAddCategory(payload));
+};
+
+const editCategory = category => dispatch => {
+  dispatch(setEditCategory(category));
+};
+
+const deleteCategory = id => (dispatch, getState) => {
+  //get category name
+  const categoryName = getState()?.categories?.categories?.filter(
+    category => category?.id === id
+  )?.[0]?.categoryName;
+
+  //get locations under the same category name
+  const locationsUnderCategory = getState()?.locations?.locations?.filter(
+    location => location.categoryName === categoryName
+  );
+
+  //if there are locations under the same category, delete each location under the same category
+  if (locationsUnderCategory.length)
+    locationsUnderCategory.map(location =>
+      dispatch(deleteLocation(location?.id))
+    );
+
+  //delete category
+  dispatch(setDeleteCategory(id));
 };
 
 //selectors
 const selectCategories = state => state?.categories?.categories;
 
-export { addCategories, selectCategories };
+export { addCategories, selectCategories, editCategory, deleteCategory };
 
 export default categoriesSlice.reducer;

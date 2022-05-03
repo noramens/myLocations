@@ -52,7 +52,11 @@ export default function CollapsibleTable({ rows }) {
 
   return (
     <TableContainer component={Paper}>
-      <EnhancedTableToolbar numSelected={selected.length} />
+      <EnhancedTableToolbar
+        numSelected={selected.length}
+        selectedRow={selected}
+        setSelectedRow={setSelected}
+      />
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -74,7 +78,7 @@ export default function CollapsibleTable({ rows }) {
         <TableBody>
           {rows?.map(row => (
             <CollapsibleTableRow
-              key={row.name}
+              key={row.id}
               row={row}
               handleClick={handleClick}
               isSelected={isSelected}

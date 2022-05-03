@@ -62,7 +62,25 @@ export default function AddLocation() {
   return (
     <Main>
       <h1>Add location</h1>
+
       <FormWrapper>
+        <FieldWrapper style={{ background: '#fff' }}>
+          <Label htmlFor="category">Category</Label>
+
+          <Select
+            id="category"
+            placeholder="select a category"
+            options={categoryOptions}
+            value={
+              categoryOptions.find(
+                option => option.label === values.categoryName
+              ) || ''
+            }
+            onChange={handleSelectChange}
+            theme={themeStyles}
+            styles={selectStyle}
+          />
+        </FieldWrapper>
         <FieldWrapper>
           <Label htmlFor="location">Location Name*</Label>
           <Input
@@ -133,24 +151,6 @@ export default function AddLocation() {
               )}
             </CoordinateInput>
           </CoordinatesWrapper>
-
-          <FieldWrapper style={{ background: '#fff' }}>
-            <Label htmlFor="category">Category</Label>
-
-            <Select
-              id="category"
-              placeholder="select a category"
-              options={categoryOptions}
-              value={
-                categoryOptions.find(
-                  option => option.label === values.categoryName
-                ) || ''
-              }
-              onChange={handleSelectChange}
-              theme={themeStyles}
-              styles={selectStyle}
-            />
-          </FieldWrapper>
         </FieldWrapper>
 
         <FormAction disabled={disableAddButton} onClick={handleAddCategory}>

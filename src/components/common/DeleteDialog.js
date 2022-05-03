@@ -11,7 +11,7 @@ import { FormAction } from '../Styles';
 
 export default function DeleteDialog({
   open,
-  handleModalClose,
+  handleDialogClose,
   type,
   name,
   handleDelete,
@@ -22,17 +22,22 @@ export default function DeleteDialog({
       maxWidth="sm"
       fullWidth={true}
       open={open}
-      onClose={handleModalClose}
+      onClose={handleDialogClose}
     >
-      <DialogTitle>Confirm delete {type}</DialogTitle>
+      <DialogTitle>
+        Confirm delete {name} {type}
+      </DialogTitle>
 
       <DialogContent>
-        Are you sure you want to delete {name} {type}? <br />
-        {description}
+        <h3>
+          Are you sure you want to delete <em> {name} </em>
+          {type}?
+        </h3>
+        <p style={{ marginBottom: 0 }}>{description}</p>
       </DialogContent>
 
       <DialogActions>
-        <FormAction secondary onClick={handleModalClose}>
+        <FormAction secondary onClick={handleDialogClose}>
           Close
         </FormAction>
         <FormAction onClick={handleDelete}>Confirm Delete</FormAction>
@@ -43,9 +48,9 @@ export default function DeleteDialog({
 
 DeleteDialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  handleModalClose: PropTypes.func.isRequired,
+  handleDialogClose: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   handleDelete: PropTypes.func.isRequired,
-  description: PropTypes.string.isRequired
+  description: PropTypes.string
 };

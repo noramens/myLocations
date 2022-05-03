@@ -31,7 +31,7 @@ export function stableSort(array, comparator) {
 export const prepareCategorySelectOptions = (categories = []) => {
   return categories.map(category => {
     return {
-      label: category.name,
+      label: category.categoryName,
       value: category.id
     };
   });

@@ -64,7 +64,7 @@ export default function EditLocation({
     }));
   }
 
-  function handleModalClose() {
+  function handleDialogClose() {
     setOpen(false);
     setValues({});
   }
@@ -72,7 +72,7 @@ export default function EditLocation({
   function handleSaveChanges() {
     const payload = { ...locationDetails, ...values };
     dispatch(editLocation(payload));
-    handleModalClose();
+    handleDialogClose();
     setSelectedRow([]);
   }
 
@@ -81,11 +81,28 @@ export default function EditLocation({
       maxWidth="sm"
       fullWidth={true}
       open={open}
-      onClose={handleModalClose}
+      onClose={handleDialogClose}
     >
       <DialogTitle>Edit location</DialogTitle>
 
       <DialogContent>
+        <FieldWrapper style={{ background: '#fff' }}>
+          <Label htmlFor="category">Category</Label>
+
+          <Select
+            id="category"
+            placeholder="select a category"
+            options={categoryOptions}
+            defaultValue={
+              categoryOptions.find(
+                option => option.label === locationDetails?.categoryName
+              ) || ''
+            }
+            onChange={handleSelectChange}
+            theme={themeStyles}
+            styles={selectStyle}
+          />
+        </FieldWrapper>
         <FormWrapper>
           <FieldWrapper>
             <Label htmlFor="location">Location Name*</Label>
@@ -157,24 +174,6 @@ export default function EditLocation({
                 )}
               </CoordinateInput>
             </CoordinatesWrapper>
-
-            <FieldWrapper style={{ background: '#fff' }}>
-              <Label htmlFor="category">Category</Label>
-
-              <Select
-                id="category"
-                placeholder="select a category"
-                options={categoryOptions}
-                value={
-                  categoryOptions.find(
-                    option => option.label === locationDetails?.categoryName
-                  ) || ''
-                }
-                onChange={handleSelectChange}
-                theme={themeStyles}
-                styles={selectStyle}
-              />
-            </FieldWrapper>
           </FieldWrapper>
         </FormWrapper>
       </DialogContent>
@@ -182,7 +181,7 @@ export default function EditLocation({
       <DialogActions>
         <FormAction
           secondary
-          onClick={handleModalClose}
+          onClick={handleDialogClose}
           disabled={disableSaveChanges}
         >
           Close

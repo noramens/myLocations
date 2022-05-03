@@ -7,9 +7,11 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Toolbar, Typography, Tooltip, IconButton, alpha } from '@mui/material';
 
+import EditCategory from './EditCategory';
 import EditLocation from './EditLocation';
 import DeleteDialog from './DeleteDialog';
 import { deleteLocation, selectLocations } from '../../store/locations';
+import { selectCategories, deleteCategory } from '../../store/categories';
 
 export default function EnhancedTableToolbar({
   numSelected,
@@ -20,6 +22,7 @@ export default function EnhancedTableToolbar({
   const dispatch = useDispatch();
 
   const locations = useSelector(selectLocations);
+  const categories = useSelector(selectCategories);
 
   const [showEditLcoationDialog, setShowEditLocationDialog] = useState(false);
   const [showEditCategoryDialog, setShowEditCategoryDialog] = useState(false);
@@ -29,10 +32,24 @@ export default function EnhancedTableToolbar({
   const [showDeleteCategoryDialog, setShowDeleteCategoryDialog] =
     useState(false);
 
-  const categoryIsActive = location?.pathname?.includes('add-category');
+  const categoryIsActive = location?.pathname?.includes('categor');
   const locationName = locations.filter(
     item => item.id === selectedRow?.[0]
   )?.[0]?.locationName;
+  const selectedCategory = categories.filter(
+    item => item.id === selectedRow?.[0]
+  )?.[0];
+
+  //check if selected category has locations
+  const categoryHasLocations = Boolean(
+    locations.filter(
+      item => item.categoryName === selectedCategory?.categoryName
+    )?.length
+  );
+
+  const deleteCategoryDescription = categoryHasLocations
+    ? 'Deleting this category will delete all locations under this category.'
+    : '';
 
   function handleEditClick() {
     categoryIsActive
@@ -51,9 +68,20 @@ export default function EnhancedTableToolbar({
     setShowDeleteLocationDialog(false);
   }
 
+  function handleCloseCategoryLocation() {
+    setSelectedRow([]);
+    setShowDeleteCategoryDialog(false);
+  }
+
   function handleDeleteLocation() {
     dispatch(deleteLocation(selectedRow?.[0]));
     handleCloseDeleteLocation();
+  }
+
+  function handleDeleteCategory(e) {
+    e.preventDefault();
+    dispatch(deleteCategory(selectedRow?.[0]));
+    handleCloseCategoryLocation();
   }
 
   return (
@@ -110,14 +138,28 @@ export default function EnhancedTableToolbar({
         setSelectedRow={setSelectedRow}
       />
 
+      <EditCategory
+        open={showEditCategoryDialog}
+        setOpen={setShowEditCategoryDialog}
+        selectedRow={selectedRow}
+        setSelectedRow={setSelectedRow}
+      />
+
       {showDeleteCategoryDialog ? (
-        <DeleteDialog />
+        <DeleteDialog
+          type="category"
+          name={selectedCategory?.categoryName}
+          open={showDeleteCategoryDialog}
+          handleDialogClose={handleCloseCategoryLocation}
+          handleDelete={handleDeleteCategory}
+          description={deleteCategoryDescription}
+        />
       ) : (
         <DeleteDialog
           type="location"
           name={locationName}
           open={showDeleteLocationDialog}
-          handleModalClose={handleCloseDeleteLocation}
+          handleDialogClose={handleCloseDeleteLocation}
           handleDelete={handleDeleteLocation}
         />
       )}

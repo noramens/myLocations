@@ -30,13 +30,13 @@ const locationsSlice = createSlice({
     },
 
     setDeleteLocation: (state, action) => {
-      const filteredLocation = state.locations.filter(
+      const locationsWithoutItem = state.locations.filter(
         location => location?.id !== action.payload
       );
 
       return {
         ...state,
-        locations: [...filteredLocation]
+        locations: [...locationsWithoutItem]
       };
     }
   }

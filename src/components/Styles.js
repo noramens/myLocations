@@ -57,7 +57,7 @@ export const Input = styled.input`
   color: #000;
   padding: 0.5rem;
   border-radius: 3px;
-  width: ${props => (props.coord ? '12.5vw' : 'auto')};
+  width: ${props => (props.coord ? '13.35vw' : 'auto')};
   &:focus {
     outline: 1.2px solid #712b75;
   }

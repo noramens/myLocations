@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import {
+  showSuccessNotification,
+  showErrorNotification
+} from './notifications';
+
 //initial state
 const initialState = {
   locations: []
@@ -47,16 +52,53 @@ const { setAddLocations, setEditLocation, setDeleteLocation } =
   locationsSlice.actions;
 
 // thunks
-const addLocation = payload => dispatch => {
+const addLocation = payload => (dispatch, getState) => {
+  //check if location already exists
+  const locationExists = Boolean(
+    getState()?.locations?.locations?.filter(
+      location => location.locationName === payload.locationName
+    )?.length
+  );
+
+  if (locationExists) {
+    dispatch(
+      showErrorNotification({
+        message: `Sorry, location with location name, ${payload?.locationName} already exists.`
+      })
+    );
+    return;
+  }
+
   dispatch(setAddLocations(payload));
+  dispatch(
+    showSuccessNotification({
+      message: `${payload?.locationName} location has been added successfully`
+    })
+  );
 };
 
 const editLocation = location => dispatch => {
   dispatch(setEditLocation(location));
+  dispatch(
+    showSuccessNotification({
+      message: `${location?.locationName} location has been edited successfully`
+    })
+  );
 };
 
-const deleteLocation = id => dispatch => {
+const deleteLocation = id => (dispatch, getState) => {
+  //get location name
+  const locationName = getState()?.locations?.locations?.filter(
+    location => location?.id === id
+  )?.[0]?.categoryName;
+
   dispatch(setDeleteLocation(id));
+
+  dispatch(
+    showSuccessNotification({
+      message: `${locationName} location has been deleted successfully`
+    })
+  );
 };
 
 //selectors

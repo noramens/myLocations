@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import AddCategory from './components/AddCategory';
 import AddLocation from './components/AddLocation';
@@ -8,8 +9,12 @@ import Home from './components/Home';
 import Locations from './components/Locations';
 import Nav from './components/Nav';
 import NotFound from './components/NotFound';
+import Notification from './components/common/Notification';
+import { selectNotifications } from './store/notifications';
 
 function App() {
+  const notifications = useSelector(selectNotifications);
+
   return (
     <Router>
       <Nav />
@@ -22,6 +27,16 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+
+      {Boolean(notifications?.length) &&
+        notifications?.map(({ id, open, severity, message }) => (
+          <Notification
+            key={id}
+            open={open}
+            severity={severity}
+            message={message}
+          />
+        ))}
     </Router>
   );
 }

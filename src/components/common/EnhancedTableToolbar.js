@@ -48,7 +48,7 @@ export default function EnhancedTableToolbar({
   );
 
   const deleteCategoryDescription = categoryHasLocations
-    ? 'Deleting this category will delete all locations under this category.'
+    ? 'NB: Confirming delete will delete all locations under the category.'
     : '';
 
   function handleEditClick() {
@@ -74,13 +74,13 @@ export default function EnhancedTableToolbar({
   }
 
   function handleDeleteLocation() {
-    dispatch(deleteLocation(selectedRow?.[0]));
+    selectedRow?.forEach(row => dispatch(deleteLocation(row)));
     handleCloseDeleteLocation();
   }
 
   function handleDeleteCategory(e) {
     e.preventDefault();
-    dispatch(deleteCategory(selectedRow?.[0]));
+    selectedRow?.forEach(row => dispatch(deleteCategory(row)));
     handleCloseCategoryLocation();
   }
 
@@ -150,6 +150,7 @@ export default function EnhancedTableToolbar({
           type="category"
           name={selectedCategory?.categoryName}
           open={showDeleteCategoryDialog}
+          numSelected={numSelected}
           handleDialogClose={handleCloseCategoryLocation}
           handleDelete={handleDeleteCategory}
           description={deleteCategoryDescription}
@@ -159,6 +160,7 @@ export default function EnhancedTableToolbar({
           type="location"
           name={locationName}
           open={showDeleteLocationDialog}
+          numSelected={numSelected}
           handleDialogClose={handleCloseDeleteLocation}
           handleDelete={handleDeleteLocation}
         />

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import AddCategory from './components/AddCategory';
 import AddLocation from './components/AddLocation';
@@ -8,8 +10,22 @@ import Home from './components/Home';
 import Locations from './components/Locations';
 import Nav from './components/Nav';
 import NotFound from './components/NotFound';
+import Notification from './components/common/Notification';
+import { removeNotification, selectNotifications } from './store/notifications';
 
 function App() {
+  const dispatch = useDispatch();
+  const notifications = useSelector(selectNotifications);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (Boolean(notifications?.length)) {
+        const currentNotification = notifications?.[0];
+        dispatch(removeNotification(currentNotification?.id));
+      }
+    }, 4000);
+  }, [dispatch, notifications]);
+
   return (
     <Router>
       <Nav />
@@ -22,6 +38,16 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+
+      {Boolean(notifications?.length) &&
+        notifications?.map(({ id, open, severity, message }) => (
+          <Notification
+            key={id}
+            open={open}
+            severity={severity}
+            message={message}
+          />
+        ))}
     </Router>
   );
 }

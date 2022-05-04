@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Dialog,
@@ -82,3 +83,10 @@ export default function EditCategory({
     </Dialog>
   );
 }
+
+EditCategory.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  selectedRow: PropTypes.array.isRequired,
+  setSelectedRow: PropTypes.func.isRequired
+};

@@ -15,7 +15,8 @@ export default function DeleteDialog({
   type,
   name,
   handleDelete,
-  description
+  description,
+  numSelected
 }) {
   return (
     <Dialog
@@ -30,7 +31,8 @@ export default function DeleteDialog({
 
       <DialogContent>
         <h3>
-          Are you sure you want to delete <em> {name} </em>
+          Are you sure you want to delete{' '}
+          <em>{numSelected > 1 ? `${numSelected} items from` : `${name}`} </em>
           {type}?
         </h3>
         <p style={{ marginBottom: 0 }}>{description}</p>
@@ -52,5 +54,6 @@ DeleteDialog.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string,
   handleDelete: PropTypes.func.isRequired,
-  description: PropTypes.string
+  description: PropTypes.string,
+  numSelected: PropTypes.oneOfType([PropTypes.array, PropTypes.number])
 };

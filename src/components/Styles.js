@@ -132,3 +132,28 @@ export const selectStyle = {
 export const Label = styled.label`
   font-weight: 300;
 `;
+
+export const Container = styled.div`
+  border: 1px solid #d9dfea;
+  border-radius: 3px;
+  margin: auto;
+  min-height: 75vh;
+  width: 60vw;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: bold;
+  border-bottom: ${props => !props.noBorder && '1px solid #d9dfea'};
+`;
+
+export const Title = styled.h3`
+  margin: 0;
+  padding: 25px 30px;
+  cursor: pointer;
+  color: ${props => props.selected && '#712b75'};
+  border-bottom: ${props => props.selected && '3px solid #712b75'};
+  font-weight: ${props => props.selected && 'bold'};
+`;

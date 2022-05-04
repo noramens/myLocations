@@ -90,7 +90,7 @@ const deleteLocation = id => (dispatch, getState) => {
   //get location name
   const locationName = getState()?.locations?.locations?.filter(
     location => location?.id === id
-  )?.[0]?.categoryName;
+  )?.[0]?.locationName;
 
   dispatch(setDeleteLocation(id));
 

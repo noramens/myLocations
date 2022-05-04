@@ -18,12 +18,22 @@ const notificationSlice = createSlice({
         ...state,
         allNotifications: [action.payload, ...state.allNotifications]
       };
+    },
+
+    removeNotification(state, action) {
+      const newNotifications = state.allNotifications.filter(
+        notif => notif.id !== action.payload
+      );
+      return {
+        ...state,
+        allNotifications: newNotifications
+      };
     }
   }
 });
 
 //extract actions from slice
-const { addNotification } = notificationSlice.actions;
+const { addNotification, removeNotification } = notificationSlice.actions;
 
 //thunks
 const showSuccessNotification = notification => dispatch => {
@@ -51,7 +61,8 @@ export {
   addNotification,
   showSuccessNotification,
   showErrorNotification,
-  selectNotifications
+  selectNotifications,
+  removeNotification
 };
 
 export default notificationSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Snackbar } from '@mui/material';
+import { Snackbar, Stack } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -9,20 +9,23 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function Notification({ severity, message }) {
   const [open, setOpen] = useState(true);
+
   function handleClose() {
     setOpen(false);
   }
+
   return (
-    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-        {message}
-      </Alert>
-    </Snackbar>
+    <Stack spacing={2} sx={{ width: '100%' }}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+    </Stack>
   );
 }
 
 Notification.propTypes = {
-  open: PropTypes.bool.isRequired,
   severity: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired
 };

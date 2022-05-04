@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function EmptyState({ name }) {
   return (
@@ -6,7 +7,7 @@ export default function EmptyState({ name }) {
       style={{
         textAlign: 'center',
         width: '40vw',
-        margin: 'auto'
+        margin: '5rem auto'
       }}
     >
       Your {name} list is empty. You may want to consider adding one using the{' '}
@@ -14,3 +15,7 @@ export default function EmptyState({ name }) {
     </h3>
   );
 }
+
+EmptyState.propTypes = {
+  name: PropTypes.string.isRequired
+};

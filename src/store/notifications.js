@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 //initial state
 const initialState = {
-  allNotifications: []
+  isActive: false,
+  messsage: '',
+  severity: ''
 };
 
 //slice
@@ -13,20 +15,17 @@ const notificationSlice = createSlice({
 
   reducers: {
     addNotification(state, action) {
-      action.payload.id = new Date()?.getTime();
       return {
         ...state,
-        allNotifications: [action.payload, ...state.allNotifications]
+        ...action.payload,
+        isActive: true
       };
     },
-
     removeNotification(state, action) {
-      const newNotifications = state.allNotifications.filter(
-        notif => notif.id !== action.payload
-      );
       return {
         ...state,
-        allNotifications: newNotifications
+        ...action.payload,
+        isActive: false
       };
     }
   }
@@ -55,13 +54,11 @@ const showErrorNotification = notification => dispatch => {
 };
 
 //selectors
-const selectNotifications = state => state.notifications.allNotifications;
 
 export {
   addNotification,
   showSuccessNotification,
   showErrorNotification,
-  selectNotifications,
   removeNotification
 };
 

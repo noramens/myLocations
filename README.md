@@ -6,6 +6,12 @@
 
 Built with React, you can save locations and group them in categories so you can later find them. [Let me know what you think](https://mylocationz.netlify.app/)
 
+## Features
+
+- User can manage (view, add, remove and edit) the list of Categories.
+- User can manage (view, add, remove and edit) the list of Locations.
+- Each screen has a top toolbar with title and action buttons. The user executes an operation on a list item by clicking the appropriate button in the top toolbar.
+
 ## Pre-requisites
 
 Ensure you have the following set up locally:

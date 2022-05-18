@@ -6,43 +6,40 @@ import {
 } from './notifications';
 
 //initial state
-const initialState = {
-  locations: []
-};
 
 // Slice
 const locationsSlice = createSlice({
   name: 'locations',
 
-  initialState: initialState,
+  initialState: { locations: {} },
 
   reducers: {
     setAddLocations: (state, action) => {
       return {
         ...state,
-        locations: [action.payload, ...state.locations]
+        locations: {
+          ...state.locations,
+          [action.payload.id]: action.payload
+        }
       };
     },
 
     setEditLocation: (state, action) => {
-      const locationsWithoutItem = state.locations.filter(
-        location => location.id !== action.payload.id
-      );
       return {
         ...state,
-        locations: [action.payload, ...locationsWithoutItem]
+        locations: {
+          ...state.locations,
+          [action.payload.id]: action.payload
+        }
       };
     },
 
     setDeleteLocation: (state, action) => {
-      const locationsWithoutItem = state.locations.filter(
-        location => location?.id !== action.payload
-      );
-
-      return {
-        ...state,
-        locations: [...locationsWithoutItem]
-      };
+      const { id } = action.payload;
+      const newState = Object.assign({}, state);
+      const { locations } = newState;
+      delete locations[id];
+      return newState;
     }
   }
 });
@@ -54,11 +51,10 @@ const { setAddLocations, setEditLocation, setDeleteLocation } =
 // thunks
 const addLocation = payload => (dispatch, getState) => {
   //check if location already exists
-  const locationExists = Boolean(
-    getState()?.locations?.locations?.filter(
-      location => location.locationName === payload.locationName
-    )?.length
-  );
+  const locations = getState()?.locations?.locations;
+  const locationExists = Object.keys(locations)?.map(
+    locationId => locations[locationId]?.locationName === payload?.locationName
+  )?.[0];
 
   if (locationExists) {
     dispatch(
@@ -88,9 +84,8 @@ const editLocation = location => dispatch => {
 
 const deleteLocation = id => (dispatch, getState) => {
   //get location name
-  const locationName = getState()?.locations?.locations?.filter(
-    location => location?.id === id
-  )?.[0]?.locationName;
+  const { locations } = getState()?.locations;
+  const locationName = locations[id]?.locationName;
 
   dispatch(setDeleteLocation(id));
 

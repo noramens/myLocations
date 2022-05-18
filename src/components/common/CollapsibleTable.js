@@ -18,13 +18,13 @@ export default function CollapsibleTable({ rows }) {
   const [selected, setSelected] = React.useState([]);
 
   const numSelected = selected?.length;
-  const rowCount = rows?.length;
+  const rowCount = Object.keys(rows)?.length;
 
   const isSelected = id => selected.indexOf(id) !== -1;
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.id);
+      const newSelecteds = Object.keys(rows).map(row => rows[row].id);
       setSelected(newSelecteds);
       return;
     }
@@ -77,15 +77,18 @@ export default function CollapsibleTable({ rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows?.map(row => (
-            <CollapsibleTableRow
-              key={row.id}
-              row={row}
-              handleClick={handleClick}
-              isSelected={isSelected}
-              locations={locations}
-            />
-          ))}
+          {Object.keys(rows)?.map(row => {
+            const rowItem = rows[row];
+            return (
+              <CollapsibleTableRow
+                key={rowItem.id}
+                row={rowItem}
+                handleClick={handleClick}
+                isSelected={isSelected}
+                locations={locations}
+              />
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
@@ -93,5 +96,5 @@ export default function CollapsibleTable({ rows }) {
 }
 
 CollapsibleTable.propTypes = {
-  rows: PropTypes.array
+  rows: PropTypes.object
 };

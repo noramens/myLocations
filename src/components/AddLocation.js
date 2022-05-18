@@ -24,7 +24,7 @@ import {
 export default function AddLocation() {
   const dispatch = useDispatch();
 
-  const categories = useSelector(selectCategories);
+  const categories = useSelector(selectCategories)?.categories;
 
   const { values, reset, setValues, errors, handleChange } = useForm(validate);
 

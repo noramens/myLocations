@@ -21,8 +21,8 @@ export default function EnhancedTableToolbar({
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const locations = useSelector(selectLocations);
-  const categories = useSelector(selectCategories);
+  const locations = useSelector(selectLocations)?.locations;
+  const categories = useSelector(selectCategories)?.categories;
 
   const [showEditLcoationDialog, setShowEditLocationDialog] = useState(false);
   const [showEditCategoryDialog, setShowEditCategoryDialog] = useState(false);
@@ -33,16 +33,13 @@ export default function EnhancedTableToolbar({
     useState(false);
 
   const categoryIsActive = location?.pathname?.includes('categor');
-  const locationName = locations.filter(
-    item => item.id === selectedRow?.[0]
-  )?.[0]?.locationName;
-  const selectedCategory = categories.filter(
-    item => item.id === selectedRow?.[0]
-  )?.[0];
+
+  const locationName = locations?.[selectedRow?.[0]]?.locationName;
+  const selectedCategory = categories?.[selectedRow?.[0]];
 
   //check if selected category has locations
   const categoryHasLocations = Boolean(
-    locations.filter(
+    locations?.filter(
       item => item.categoryName === selectedCategory?.categoryName
     )?.length
   );

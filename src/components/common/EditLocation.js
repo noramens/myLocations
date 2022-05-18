@@ -35,16 +35,14 @@ export default function EditLocation({
 }) {
   const dispatch = useDispatch();
 
-  const categories = useSelector(selectCategories);
+  const categories = useSelector(selectCategories)?.categories;
   const locations = useSelector(selectLocations);
 
   const { values, setValues, handleChange, errors } = useForm(validate);
 
   const [categoryOptions, setCategoryOptions] = useState([]);
 
-  const locationDetails = locations.filter(
-    location => location.id === selectedRow?.[0]
-  )?.[0];
+  const locationDetails = locations?.[selectedRow?.[0]];
   const disableSaveChanges =
     (!values.locationName &&
       !values.address &&

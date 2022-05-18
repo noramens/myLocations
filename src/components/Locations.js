@@ -12,7 +12,7 @@ export function LocationsTable() {
 
   return (
     <>
-      {locations.length > 0 ? (
+      {Object.keys(locations).length > 0 ? (
         <Table headCells={locationHeader} rows={locations} />
       ) : (
         <EmptyState name="location" />

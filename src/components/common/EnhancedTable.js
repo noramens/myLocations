@@ -26,10 +26,11 @@ export default function EnhancedTable({ headCells, rows }) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const count = Object.keys(rows).length;
   const isSelected = id => selected.indexOf(id) !== -1;
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - count) : 0;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -39,7 +40,7 @@ export default function EnhancedTable({ headCells, rows }) {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.id);
+      const newSelecteds = Object.keys(rows);
       setSelected(newSelecteds);
       return;
     }
@@ -99,13 +100,16 @@ export default function EnhancedTable({ headCells, rows }) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={count}
               headCells={headCells}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(
+                Object.keys(rows).map(id => rows[id]),
+                getComparator(order, orderBy)
+              )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
                   const isItemSelected = isSelected(row.id);
@@ -160,7 +164,7 @@ export default function EnhancedTable({ headCells, rows }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={count}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -177,5 +181,5 @@ export default function EnhancedTable({ headCells, rows }) {
 
 EnhancedTable.propTypes = {
   headCells: PropTypes.array.isRequired,
-  rows: PropTypes.array.isRequired
+  rows: PropTypes.object.isRequired
 };

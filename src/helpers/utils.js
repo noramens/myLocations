@@ -29,10 +29,12 @@ export function stableSort(array, comparator) {
 }
 
 export const prepareCategorySelectOptions = (categories = []) => {
-  return categories.map(category => {
-    return {
-      label: category.categoryName,
-      value: category.id
-    };
-  });
+  return Object.keys(categories)
+    .map(categoryId => categories[categoryId])
+    .map(category => {
+      return {
+        label: category.categoryName,
+        value: category.id
+      };
+    });
 };

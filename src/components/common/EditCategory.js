@@ -21,13 +21,11 @@ export default function EditCategory({
 }) {
   const dispatch = useDispatch();
 
-  const categories = useSelector(selectCategories);
+  const categories = useSelector(selectCategories)?.categories;
 
   const { values, errors, setValues, handleChange } = useForm(validate);
 
-  const categoryDetails = categories.filter(
-    category => category.id === selectedRow?.[0]
-  )?.[0];
+  const categoryDetails = categories[selectedRow[0]];
   const disableSaveChanges =
     !values.categoryName || Object.keys(errors)?.length !== 0;
 

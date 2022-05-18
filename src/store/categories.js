@@ -6,40 +6,39 @@ import {
   showErrorNotification
 } from './notifications';
 
-//initial state
-const initialState = {
-  categories: []
-};
-
 // Slice
 const categoriesSlice = createSlice({
   name: 'categories',
 
-  initialState: initialState,
+  initialState: { categories: {} },
 
   reducers: {
-    setAddCategory: (state, action) => {
-      return {
-        ...state,
-        categories: [action.payload, ...state.categories]
-      };
-    },
+    setAddCategory: (state, action) => ({
+      ...state,
+      categories: {
+        ...state.categories,
+        [action.payload.id]: action.payload
+      }
+    }),
+
     setEditCategory: (state, action) => {
-      const categoriesWithoutItem = state.categories.filter(
-        category => category.id !== action.payload.id
-      );
       return {
         ...state,
-        categories: [action.payload, ...categoriesWithoutItem]
+
+        categories: {
+          ...state.categories,
+          [action.payload.id]: action.payload
+        }
       };
     },
+
     setDeleteCategory: (state, action) => {
-      const categoriesWithoutItem = state.categories.filter(
-        category => category?.id !== action.payload
-      );
+      const { id } = action.payload;
+      const { categories } = state;
+      delete categories[id];
       return {
         ...state,
-        categories: [...categoriesWithoutItem]
+        categories: { ...categories }
       };
     }
   }
@@ -51,11 +50,11 @@ const { setAddCategory, setEditCategory, setDeleteCategory } =
 
 // thunks
 const addCategories = payload => (dispatch, getState) => {
-  const categoryExists = Boolean(
-    getState().categories.categories.filter(
-      category => category?.categoryName === payload?.categoryName
-    )?.length
-  );
+  //check if category already exists
+  const categories = getState()?.categories?.categories;
+  const categoryExists = Object.keys(categories)?.map(
+    categoryId => categories[categoryId]?.categoryName === payload?.categoryName
+  )?.[0];
 
   if (categoryExists) {
     dispatch(
@@ -83,15 +82,16 @@ const editCategory = category => dispatch => {
 };
 
 const deleteCategory = id => (dispatch, getState) => {
-  //get category name
-  const categoryName = getState()?.categories?.categories?.filter(
-    category => category?.id === id
-  )?.[0]?.categoryName;
+  const {
+    categories: { categories },
+    locations: { locations }
+  } = getState();
+  const categoryName = categories[id]?.categoryName;
 
   //get locations under the same category name
-  const locationsUnderCategory = getState()?.locations?.locations?.filter(
-    location => location.categoryName === categoryName
-  );
+  const locationsUnderCategory = Object.keys(locations)
+    ?.map(locationId => locations[locationId])
+    .filter(location => location.categoryName === categoryName);
 
   //if there are locations under the same category, delete each location under the same category
   if (Boolean(locationsUnderCategory.length))
@@ -110,7 +110,7 @@ const deleteCategory = id => (dispatch, getState) => {
 };
 
 //selectors
-const selectCategories = state => state?.categories?.categories;
+const selectCategories = state => state?.categories;
 
 export { addCategories, selectCategories, editCategory, deleteCategory };
 

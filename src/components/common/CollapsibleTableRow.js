@@ -26,9 +26,9 @@ export default function CollapsibleTableRow({
 
   const isItemSelected = isSelected(row.id);
   const labelId = `enhanced-table-checkbox-${row.id}`;
-  const tableItems = locations.filter(
-    location => location.categoryName === row.categoryName
-  );
+  const tableItems = Object.keys(locations)
+    ?.map(item => locations[item])
+    .filter(location => location.categoryName === row.categoryName);
 
   return (
     <React.Fragment>
@@ -71,7 +71,7 @@ export default function CollapsibleTableRow({
               <Typography variant="h6" gutterBottom component="div">
                 Locations
               </Typography>
-              {tableItems.length === 0 ? (
+              {tableItems?.length === 0 ? (
                 <h3 style={{ textAlign: 'center' }}>
                   There are no locations under this category
                 </h3>
@@ -125,5 +125,5 @@ CollapsibleTableRow.propTypes = {
   }),
   handleClick: PropTypes.func.isRequired,
   isSelected: PropTypes.func.isRequired,
-  locations: PropTypes.array.isRequired
+  locations: PropTypes.object.isRequired
 };

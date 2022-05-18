@@ -8,10 +8,11 @@ import { Main } from './Styles';
 import CollapsibleTable from './common/CollapsibleTable';
 
 export function CategoriesTable() {
-  const categories = useSelector(selectCategories);
+  const categories = useSelector(selectCategories)?.categories;
+
   return (
     <>
-      {categories.length > 0 ? (
+      {Object.keys(categories).length > 0 ? (
         <CollapsibleTable headCells={categoryHeader} rows={categories} />
       ) : (
         <EmptyState name="category" />
